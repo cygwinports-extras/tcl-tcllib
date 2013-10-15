@@ -1,0 +1,27 @@
+inherit tcl
+
+NAME="tcl-tcllib"
+VERSION=1.15
+RELEASE=1
+CATEGORY="Tcl"
+SUMMARY="Tcl utility library"
+DESCRIPTION="Tcllib is a collection of utility modules for Tcl. These modules
+provide a wide variety of functionality, from implementations of standard data
+structures to implementations of common networking protocols. The intent is to
+collect commonly used function into a single library, which users can rely on
+to be available and stable."
+HOMEPAGE="http://tcllib.sourceforge.net/"
+SRC_URI="mirror://sourceforge/tcllib/tcllib-${VERSION}.tar.bz2"
+SRC_DIR="tcllib-${VERSION}"
+
+src_compile() { :; }
+
+src_install() {
+	cd ${S}
+	${TCLSH} installer.tcl \
+		-no-wait -no-gui -no-html -nroff -no-examples -pkgs \
+		-app-path ${D}/usr/bin \
+		-pkg-path ${D}/usr/lib/tcllib${VERSION} \
+		-nroff-path ${D}/usr/share/man/mann \
+		|| error "install.tcl failed"
+}
